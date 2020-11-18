@@ -39,9 +39,82 @@ border: 1px solid black;
 }
 label { white-space: nowrap }
 </style>
-</head>
-<body>
-<p>main asst one java</p>
+<script language="Javascript">
 
-</body>
-</html>
+/* Note: Typing the enter key in any field of a form submits the form.
+This can be suppressed by not using a form.*/
+
+var suggest;
+
+function setSearch() {
+suggest = new AutoSuggest(document.getElementById('requestField'), bookNames);
+document.getElementById("requestField").focus();
+var viewportH = Math.floor(window.innerHeight * .7);
+elem = document.getElementById("inputCell");
+elem.style.height = viewportH;
+};
+
+function getDataToAdd(params) {
+   $.get(params,
+   function(data) {
+     var rep = document.getElementById("inputCell");
+     rep.innerHTML = data + rep.innerHTML;
+     document.getElementById("requestField").focus();
+   });
+ };
+
+function findPassage(elem) {
+  if (!elem) { elem = document.getElementById("requestField"); }
+  var box = document.getElementById("engrish");
+  var eng = "";
+  if (box.checked) { eng = "0.KJVEnglish;";}
+  var selected = eng + "__COL_KEY__"; 
+  var params = "/../corpus/getRef.jsp?passage=" + encodeURI(elem.value)
+    + "&lang=" + encodeURI(selected);
+  getDataToAdd(params);
+};
+
+function returned(value) {
+  var rep = document.getElementById("inputCell");
+  rep.innerHTML = value + rep.innerHTML;
+};
+
+function clearReturn() {
+  var rep = document.getElementById("inputCell");
+  rep.innerHTML = "&nbsp;";
+  rep = document.getElementById("requestField");
+  rep.value="";
+  rep.focus();
+};
+
+/* The mouse clicks on a span which holds only the verse reference.
+This span is inside a span which has the text as a mouse over target,
+so its parent has the text as its target.*/
+
+function hitSpan(elem, refID, vID) {
+  var tit = elem.parentNode.title; // The text of the verse
+  var htm = elem.innerHTML; // Reference to the verse, has a space at end
+  var rep = document.getElementById("inputCell");
+  rep.innerHTML = "<P>" + tit + " <b>" + htm + "</b></p>" + rep.innerHTML;
+};
+
+</script>
+</HEAD>
+<BODY onLoad='setSearch()' style="background-color:#E8E8E8;">
+<h1 align="center">__LANG__</h1>
+<input type="text" name="requestField" id="requestField" value=""
+title="Enter the book, chapter, and verse(s) for a scripture passage as in Re:20:10, then press Find or press the Enter key.">
+<button type="reset" id="findBtn"  name="findBtn" class="btnBlue cursorHand"
+title="Searches for the verse or passage named in the input box as in  Ge. 1:1-4"
+onClick="javascript:findPassage()">Find Verses</button>
+<button type="reset" id="clearBtn" name="clearBtn" class="btnRed cursorHand"
+title="Clears the input field and the accumulated verses"
+onClick="javascript:clearReturn()">Clear</button>
+<label><input type="checkbox" name="engrish" id="engrish" title="Want English in parallel with __LANG__">English</label>
+<div id="autosuggest"><ul></ul></div>
+<table border="0" align="center" VALIGN="top" width="100%">
+<tr><td colspan="1" bgcolor="black" height="6"></td></tr>
+<tr><td><div id="inputCell" style="overflow: auto;" ></div></td></tr>
+</table>
+</BODY>
+</HTML>

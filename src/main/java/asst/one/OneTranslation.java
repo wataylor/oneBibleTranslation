@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import asst.MapLanguagesToTables;
 import asst.Utils;
 
 /**
@@ -40,12 +41,18 @@ public class OneTranslation extends HttpServlet {
 		response.setContentType("text/html");
 		response.setCharacterEncoding("UTF8");
 		String lang = request.getParameter("lang");
+		String key = MapLanguagesToTables.LANG_2_TABLE.get(lang);
 		PrintWriter out = response.getWriter();
+		if ((lang == null) || (lang.length() < 2) || (key == null)) {
+			out.print("Did not recognize the translation language " + lang);
+			return;
+		}
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		//out.println("<br>Onward");
 		//System.out.println(Utils.getHtmlHead());
 		StringBuilder sb = new StringBuilder(Utils.getHtmlHead());
 		Utils.replaceAll(sb, "__LANG__", lang);
+		Utils.replaceAll(sb, "__COL_KEY__", key);
 		out.print(sb.toString());
 	}
 
