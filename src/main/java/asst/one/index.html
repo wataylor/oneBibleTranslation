@@ -63,6 +63,10 @@ function getDataToAdd(params) {
    });
  };
 
+function getHtml() {
+window.location.href = "/../corpus/ProduceHtml?lang=__LANG__";
+};
+ 
 function findPassage(elem) {
   if (!elem) { elem = document.getElementById("requestField"); }
   var box = document.getElementById("engrish");
@@ -111,7 +115,9 @@ onClick="javascript:findPassage()">Find Verses</button>
 title="Clears the input field and the accumulated verses"
 onClick="javascript:clearReturn()">Clear</button>
 <label><input type="checkbox" name="engrish" id="engrish" title="Want English in parallel with __LANG__">English</label>
-<div id="autosuggest"><ul></ul></div>
+<button type="reset" id="htmlBtn" name="htmlBtn" class="btnRed cursorHand"
+title="Replaces window with the entire Bible as a .html flle"
+onClick="javascript:getHtml()">Get HTML</button><div id="autosuggest"><ul></ul></div>
 <table border="0" align="center" VALIGN="top" width="100%">
 <tr><td colspan="1" bgcolor="black" height="6"></td></tr>
 <tr><td><div id="inputCell" style="overflow: auto;" ></div></td></tr>
