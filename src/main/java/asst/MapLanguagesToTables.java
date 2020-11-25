@@ -3,8 +3,12 @@ package asst;
 import java.util.Map;
 import java.util.TreeMap;
 
-/** Generate a map between the corups language names
+/** Generate a map between the corpus language names
  * and the SQL table and column where the verse text resides
+ * 
+ * <p><b>Note</b>: This file is used in both the 1 project and in the
+ * corpus project.  It must be maintained carefully in both places.</p>
+ * 
  * @author Material Gain
  * @since 2020 11
  */
