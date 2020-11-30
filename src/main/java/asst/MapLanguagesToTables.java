@@ -151,6 +151,6 @@ public class MapLanguagesToTables {
 	}
 
 	private static String makeHrefOf(String str) {
-		return "<a href=\"" + str + "\"/>" + str + "</a> ";
+		return "<a href=\"" + str + "\"/>" + str + "</a>&nbsp; ";
 	}
 }
